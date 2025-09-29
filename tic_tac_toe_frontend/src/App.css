@@ -1,104 +1,295 @@
-/* CSS Variables for Theme Management */
+/* Ocean Professional Theme Variables */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #2563EB; /* blue */
+  --secondary: #F59E0B; /* amber */
+  --error: #EF4444;
+  --bg: #f9fafb; /* background */
+  --surface: #ffffff;
+  --text: #111827;
+
+  --surface-2: #f3f4f6;
+  --ring: rgba(37, 99, 235, 0.25);
+  --shadow: 0 10px 25px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 10px;
+  --transition: 220ms ease;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.App {
+/* Background gradient layer */
+.ocean-gradient {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(37, 99, 235, 0.10), transparent),
+              radial-gradient(1000px 500px at 120% 0%, rgba(245, 158, 11, 0.10), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ocean-app {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  position: relative;
+  z-index: 1;
+}
+
+.ocean-header {
+  padding: 40px 20px 20px;
   text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
+.ocean-title {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ocean-subtitle {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.ocean-main {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.game-card {
+  width: 100%;
+  max-width: 560px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(37,99,235,0.06), rgba(249,250,251,0));
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.game-header {
   display: flex;
-  flex-direction: column;
+  gap: 16px;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #F3F6FD;
+  color: #1f2937;
+  padding: 10px 14px;
+  border-radius: var(--radius-xs);
   font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 0 rgba(17,24,39,0.06) inset;
+}
+
+.status-badge.win {
+  background: rgba(37,99,235,0.12);
+  color: #0f172a;
+}
+
+.status-badge.draw {
+  background: rgba(107,114,128,0.12);
+  color: #111827;
+}
+
+.status-badge.next {
+  background: rgba(245,158,11,0.12);
+  color: #111827;
+}
+
+.dot { display: inline-flex; }
+
+.mode-selector {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  display: inline-flex;
+  gap: 6px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.03);
+}
+
+.btn-chip {
+  border: none;
+  background: transparent;
+  color: #374151;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.theme-toggle:hover {
+.btn-chip:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.btn-chip.active {
+  background: #ffffff;
+  color: var(--primary);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.08), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* Board */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 18px;
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  box-shadow: 0 1px 0 rgba(17,24,39,0.06) inset, 0 8px 24px rgba(0,0,0,0.06);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), outline-color var(--transition);
+  outline: 2px solid transparent;
+}
+
+.cell:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  box-shadow: 0 2px 0 rgba(17,24,39,0.06) inset, 0 12px 32px rgba(0,0,0,0.08);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.cell:active {
+  transform: translateY(0px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cell.win {
+  background: linear-gradient(180deg, rgba(37,99,235,0.10), #ffffff);
+  outline: 2px solid rgba(37,99,235,0.25);
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+.mark {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transform: translateY(1px);
+  transition: color var(--transition), text-shadow var(--transition);
+  color: #334155;
 }
+
+.mark.x {
+  color: var(--primary);
+  text-shadow: 0 8px 20px rgba(37,99,235,0.25);
+}
+
+.mark.o {
+  color: var(--secondary);
+  text-shadow: 0 8px 20px rgba(245,158,11,0.25);
+}
+
+/* Controls */
+.controls {
+  display: grid;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.start-actions, .in-game-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.btn.primary {
+  background: linear-gradient(180deg, #2563EB, #1d4ed8);
+  color: white;
+  box-shadow: 0 10px 20px rgba(37,99,235,0.25), 0 2px 6px rgba(37,99,235,0.2);
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(37,99,235,0.30), 0 4px 10px rgba(37,99,235,0.22);
+}
+
+.btn.surface {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.btn.surface:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.btn.outline {
+  background: transparent;
+  color: #1f2937;
+  border: 2px solid #e5e7eb;
+}
+
+.btn.outline:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.14);
+}
+
+.ocean-footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+  padding: 28px 20px 36px;
+}
+
+.accent { color: var(--secondary); }
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .game-card { padding: 18px; border-radius: 14px; }
+  .board { gap: 10px; }
+  .mark { font-size: 36px; }
+  .btn { padding: 10px 14px; border-radius: 10px; }
+}
+
